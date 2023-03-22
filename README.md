@@ -7,6 +7,8 @@ On Airbnb hosts set their own prices for their listings, although Airbnb and sim
 
 Given the considerable number of options that customers have, and that 53% of respondents to the Morgan Stanley study use Airbnb because of the cost savings, this means that over half of Airbnb rentals are happening because of their price [2]. This coupled with the fact that only 11% of listings are reserved by customers on a typical night means that hosts who are not optimizing their pricing strategy are losing out on a lot of money, and there is clearly room for improvement [2]. This paper will attempt to solve this problem by using machine learning techniques with Python to predict the price bin for properties in six major cities in the United States.
 
+
+
 ## Analysis
 
 ### The Data:
@@ -52,6 +54,8 @@ The scores from each model were considered, and the following features were foun
 
 Because finding an exact price is not always necessary, determining an optimal price range will be used for these classification models. To do this log_price was discretized into four categories low, medium, high, and very high. To do this both equal width and equal frequency binning methods were used, and the results will be shown for both methods. Equal width bins split the bins so that the width intervals are the same whereas equal frequency makes sure there are an equal number of observations in each bin.
 
+
+
 ## Decision Tree Models:
 
 First the Decision Tree Classifier was used to predict the bins based on all sixteen remaining features and on only the calculated top ten influential features. For these models’ multiple criteria were used to optimize the model, starting with max depths of 5 and 10 to limit overfitting, as the deeper the tree grows the more complex the model will become and the risk of overfitting the training sample increases. The default ‘best’ splitter was used to choose the best split at each node by evaluating all splits before splitting instead of randomly splitting at each node. Both Gini and Entropy criteria were used where Entropy maximized the information gain at each node and Gini measures the divergences between the probability distributions of the values to equivalent results.
@@ -60,10 +64,14 @@ First the Decision Tree Classifier was used to predict the bins based on all six
 
 ![image](https://user-images.githubusercontent.com/94664740/226774260-8f4c81e3-4eb4-4103-92ae-dfd768cb94bd.png)
 
+
+
 ## Naive Bayes Model:
 Next a Gaussian Naïve Bayes model was used to predict log_price, the advantage being fast processing and solving multiclass problems. This is a classification technique based on the Bayes theorem and the Gaussian model is used to support continuous values and assumes that each class is normally distributed. The algorithm predicts based on occurrences in the dataset so there is the ‘Zero Probability Phenomena’ when there is no class of something in the dataset. This occurred when using equal width bins and the Laplace transformation was used to smooth the results.
 
 ![image](https://user-images.githubusercontent.com/94664740/226774459-bf3239ae-6d52-4524-944c-a81f9be21302.png)
+
+
 
 ## Clustering Models:
 K-Means clustering is one of the most popular methods used for classification problems. This model separates the data into clusters based on similar features and common patterns. K-Means Algorithm divides the dataset into k clusters based on similarity and mean distance from the centroid that subgroup formed. The optimal number of clusters was determined using the sum of squared error and elbow plots. 
@@ -77,7 +85,10 @@ Both indicated that 3-4 clusters would perform optimally. A K of 2, 3, 4, 6 and 
 Hierarchical clustering is another approach to clustering like k-means clustering for identifying groups in the dataset. For this model it is not required to specify the number of clusters to be generated as is required by the k-means approach. Hierarchical clustering results in a tree-based representation of the observations, called a dendrogram that uses Euclidean distance to show clusters.
 
 
+
+
 # Results
+
 
 ## Decision Tree Models:
 
@@ -88,11 +99,13 @@ As can be seen from the figure shown here. The decision tree model performance w
 The models with equal frequency bins performed slightly better with a deeper tree and slightly worse with equal width bins. With all sixteen features and equal width bins the random forest model was the best performing model that was used and was the best performing when using all features with equal frequency as well performing 1% better than the individual decision trees.
 
 
+
 ## Naive Bayes Models:
 
 ![image](https://user-images.githubusercontent.com/94664740/226774749-05c7c428-500b-41f8-bc17-b53e46967d67.png)
 
 The Naïve bayes models performed slightly worse than the decision trees and random forest models. Interestingly for equal width bins the accuracy was higher with just the top ten features and increased by about 3% due to Laplace smoothing. For equal frequency bins the opposite was true with the model with all features performing 2% better and each model improved by only 1% after smoothing.
+
 
 
 ## Cluster Models:
@@ -110,6 +123,9 @@ Using the dendogram to choose a two-cluster approach, the HAC plot shows that th
 
 ![image](https://user-images.githubusercontent.com/94664740/226774936-6d882a92-a9ec-4cca-b845-01608be13123.png)
 
+
+
+
 # Conclusion:
 
 Airbnb prices are very volatile depending on several factors and there are still many things that can be done to find an optimal price point for each rental property. Given the dataset and the variables the vast majority of datapoints ended up in the high range of log_price, this could be geographically measured from city center or using other location-based features like zip code with a lot more data processing on the front end to narrow down the data and create better results.
@@ -119,6 +135,8 @@ Most of the disparity in model accuracy comes from the binning method as equal w
 Looking at the dataset and results from the different models, there are a few things that could have been done differently, one hot coding could have been used instead for label encoding but was not for fear of overfitting and running into the dummy variable trap. Using NLP techniques on the property description and reviews could also add some insight into the nature of the reviews and how a location is perceived to give higher accuracy to the models.
 
 With the Decision Tree or Naïve Bayes model a host would be able to predict quite well the range of price that they should put their property for, especially if they live in a similar metro area to the cities that were in this dataset.
+
+
 
 
 
