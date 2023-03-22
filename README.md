@@ -77,3 +77,52 @@ Both indicated that 3-4 clusters would perform optimally. A K of 2, 3, 4, 6 and 
 Hierarchical clustering is another approach to clustering like k-means clustering for identifying groups in the dataset. For this model it is not required to specify the number of clusters to be generated as is required by the k-means approach. Hierarchical clustering results in a tree-based representation of the observations, called a dendrogram that uses Euclidean distance to show clusters.
 
 
+# Results
+
+## Decision Tree Models:
+
+![image](https://user-images.githubusercontent.com/94664740/226774678-56267f7d-666b-4916-9022-3f7839976496.png)
+
+As can be seen from the figure shown here. The decision tree model performance was most impacted by binning technique due to a skewed number of occurrences landing in one bin so the model overfit and predicted most values to go in that bin. However, for the equal frequency bins there was a 1% increase in model performance when using only the top ten features while there was a decrease of 2% in the random forest model when using only the top ten features.
+
+The models with equal frequency bins performed slightly better with a deeper tree and slightly worse with equal width bins. With all sixteen features and equal width bins the random forest model was the best performing model that was used and was the best performing when using all features with equal frequency as well performing 1% better than the individual decision trees.
+
+
+## Naive Bayes Models:
+
+![image](https://user-images.githubusercontent.com/94664740/226774749-05c7c428-500b-41f8-bc17-b53e46967d67.png)
+
+The Naïve bayes models performed slightly worse than the decision trees and random forest models. Interestingly for equal width bins the accuracy was higher with just the top ten features and increased by about 3% due to Laplace smoothing. For equal frequency bins the opposite was true with the model with all features performing 2% better and each model improved by only 1% after smoothing.
+
+
+## Cluster Models:
+The K-Means models had an exceptionally low accuracy compared to both the decision trees and Naïve Bayes models. Clusters of 2, 3, 4 ,6, and 10 were used although with only two clusters both models had an accuracy of 0.0 so that is not shown.
+
+![image](https://user-images.githubusercontent.com/94664740/226774844-d3f133a1-5903-4089-b930-bcb92736e39e.png)
+
+This is also the only model that saw a similar accuracy score between the equal width and equal frequency bins with the highest accuracy coming from four clusters and the equal width binning method. This model did not see a significant difference between using all features or only the top ten features, but with equal frequency binning there was some variance in accuracy using 6 and 10 clusters.
+
+Hierarchical clustering was used and the dendogram out put is shown below. The dendogram can be divided into the four bins as the data shows however K-Means gives a much more intuitive result of the model accuracy as the dendogram utilized too many resources and shows more results in the lower two bins than expected.
+
+![image](https://user-images.githubusercontent.com/94664740/226774910-4a02b326-8ba3-4b84-9846-06b15544991c.png)
+
+Using the dendogram to choose a two-cluster approach, the HAC plot shows that there is a lot of overlap between the clusters and could also explain why both clustering methods had a challenging time creating a model that was exceptionally accurate.
+
+![image](https://user-images.githubusercontent.com/94664740/226774936-6d882a92-a9ec-4cca-b845-01608be13123.png)
+
+# Conclusion:
+
+Airbnb prices are very volatile depending on several factors and there are still many things that can be done to find an optimal price point for each rental property. Given the dataset and the variables the vast majority of datapoints ended up in the high range of log_price, this could be geographically measured from city center or using other location-based features like zip code with a lot more data processing on the front end to narrow down the data and create better results.
+
+Most of the disparity in model accuracy comes from the binning method as equal width binning can group related points together better than equal frequency but can also fall victim to overfitting the model which was seen here. By taking the log_price, prices are brought closer together and this can result in close observations being labeled differently which might be why the k-means model did not perform as well as the others.
+
+Looking at the dataset and results from the different models, there are a few things that could have been done differently, one hot coding could have been used instead for label encoding but was not for fear of overfitting and running into the dummy variable trap. Using NLP techniques on the property description and reviews could also add some insight into the nature of the reviews and how a location is perceived to give higher accuracy to the models.
+
+With the Decision Tree or Naïve Bayes model a host would be able to predict quite well the range of price that they should put their property for, especially if they live in a similar metro area to the cities that were in this dataset.
+
+
+
+### References:
+[1] “Airbnb by the Numbers: Usage, Demographics, and Revenue Growth” MuchNeeded [Online]. Available: https://muchneeded.com/airbnb-statistics. [Accessed March 2022]
+[2] “Airbnb Now A $100 Billion Company After Stock Market Debut Sees Stock Price Double” NPR [Online]. Available: https://www.npr.org/2020/12/10/944931270/airbnb-defying-pandemic-fears-takes-its-company-public-in-ipo [Accessed March 2022]
+[3] R. Mizrahi, “AirBnB Listings in Major US Cities.” Kaggle, March 14, 2018. [Online]. Available: https://www.kaggle.com/rudymizrahi/airbnb-listings-in-major-us-cities-deloitte-ml.
